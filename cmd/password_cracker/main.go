@@ -7,7 +7,7 @@ import (
 
 
 func main(){
-  whitelist := []rune("ABCDEFGHIJKLMOPQRSTUVWXYZ")
-  cracker.CrackPassword("7a95bf926a0333f57705aeac07a362a2", 4, whitelist)
+  // cracker.PureBruteforce("08054846bbc9933fd0395f8be516a9f9", 4, whitelist)
+  cracker.WordlistBruteForce("2bdb742fc3d075ec6b73ea414f27819a")
 }
 

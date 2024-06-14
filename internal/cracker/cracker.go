@@ -1,10 +1,12 @@
 package cracker
 
 import (
+	"bufio"
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
-  "math"
+	"math"
+	"os"
 )
 
 func getMD5Hash(text string) string {
@@ -17,7 +19,7 @@ func powInt(x, y int) int {
 }
 
 
-func CrackPassword(hashed_value string, password_lenght int, whitelist []rune) string{
+func PureBruteforce(hashed_value string, password_lenght int, whitelist []rune) string{
   if password_lenght == 0{
     password_lenght = 4
   }
@@ -42,6 +44,31 @@ func CrackPassword(hashed_value string, password_lenght int, whitelist []rune) s
     
     if hashed_pass == hashed_value { 
       return string(characters)
+    }
+  }
+
+  return ""
+}
+
+
+func WordlistBruteForce(hashed_value string) string {
+  // For now I will hardcode wordlistpath, but in the future it will be read from the arguments
+  wordlistFile, err := os.Open("rockyou.txt")
+  if err != nil {
+      panic(err)
+  }
+  defer wordlistFile.Close() 
+
+  scanner := bufio.NewScanner(wordlistFile)
+  for scanner.Scan(){
+    line := scanner.Text()
+    hashed_pass := getMD5Hash(line)
+    
+    fmt.Printf("Plain: %s | Hash: %s | same? %t \n", line, hashed_pass, hashed_pass==hashed_value)
+
+
+    if hashed_pass == hashed_value{
+      return line
     }
   }
 

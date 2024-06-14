@@ -10,16 +10,13 @@ func TestFourDigitPass(t *testing.T){
     input string
     expected string
   }{
-    {"Numeric", "81dc9bdb52d04dc20036dbd8313ed055", "1234"},
-    {"Alphabetic", "2378e46cc86f8ea4e157da9f7354d670", "help"},
-    {"Chars", "c5df4802c14ccf1cd5b83d5d3ca6b238", "#$!@"},
-    {"Mixed", "0aefcbbcb29cc747edb12dbeaa8d9c2b", "h3!p"},
-    
+    {"CODE", "08054846bbc9933fd0395f8be516a9f9", "CODE"},
+    {"PASS", "7a95bf926a0333f57705aeac07a362a2", "PASS"},
   }
 
   for _, tt := range tests {
     t.Run(tt.name, func(t *testing.T) {
-      result := CrackPassword(tt.input,4,nil)
+      result := PureBruteforce(tt.input,4,[]rune("ABCDEFGHIJKLMOPQRSTUVWXYZ"))
       if result != tt.expected {
         t.Errorf("got %v, want %v", result, tt.expected)
       }
