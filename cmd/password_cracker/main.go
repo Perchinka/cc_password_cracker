@@ -6,6 +6,6 @@ import (
 
 
 func main(){
-  cracker.CrackPassword(4, "db028607ee4e872d2f2da4a3be31b16a")
+  cracker.CrackPassword("7e2e174cfe27095afe59a4af8bab10c4", 4, 0, 0)
 }
 
