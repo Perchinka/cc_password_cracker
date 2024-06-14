@@ -5,7 +5,9 @@ import (
 )
 
 
+
 func main(){
-  cracker.CrackPassword("7e2e174cfe27095afe59a4af8bab10c4", 4, 0, 0)
+  whitelist := []rune("ABCDEFGHIJKLMOPQRSTUVWXYZ")
+  cracker.CrackPassword("7a95bf926a0333f57705aeac07a362a2", 4, whitelist)
 }
 

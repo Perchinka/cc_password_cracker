@@ -19,7 +19,7 @@ func TestFourDigitPass(t *testing.T){
 
   for _, tt := range tests {
     t.Run(tt.name, func(t *testing.T) {
-      result := CrackPassword(tt.input,4, 0, 0)
+      result := CrackPassword(tt.input,4,nil)
       if result != tt.expected {
         t.Errorf("got %v, want %v", result, tt.expected)
       }

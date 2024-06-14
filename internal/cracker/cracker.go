@@ -17,30 +17,32 @@ func powInt(x, y int) int {
 }
 
 
-func CrackPassword(hashed_value string, password_lenght int, startChar, endChar rune) string{
-  if startChar == 0 {
-    startChar = 33
-  }
-  if endChar == 0{
-    endChar = 126
-  }
+func CrackPassword(hashed_value string, password_lenght int, whitelist []rune) string{
   if password_lenght == 0{
     password_lenght = 4
   }
   
-  charRange := int(endChar-startChar+1)
-  totalCombinations := powInt(charRange, password_lenght)
+  if whitelist == nil{
+    whitelist = []rune("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+{}|:<>?~")
+  }
+
+  totalCombinations := powInt(len(whitelist), password_lenght)
   characters := make([]rune, password_lenght)
 
   // Counting from one cause math easier this way :)
-  for i := 1; i < totalCombinations+1; i++{
-    for j := 0; j < password_lenght; j++{
-      characters[j] = rune(int(startChar)+int(i/powInt(26,j))%int(endChar))
+  for i := 0; i < totalCombinations+1; i++{
+    for j := password_lenght-1; j >= 0 ; j--{
+      characters[j] = whitelist[rune((i/powInt(len(whitelist),j))%int(len(whitelist)))]
     }
-    hashed_pass := getMD5Hash(string(characters))
-    fmt.Printf("Plain: %s | Hash: %s | same? %t \n", string(characters), hashed_pass, hashed_pass==hashed_value)
 
-    if hashed_pass == hashed_value { return string(characters)}
+    plain_text := string(characters)
+    hashed_pass := getMD5Hash(plain_text)
+ 
+    fmt.Printf("Plain: %s | Hash: %s | same? %t \n", plain_text, hashed_pass, hashed_pass==hashed_value)
+    
+    if hashed_pass == hashed_value { 
+      return string(characters)
+    }
   }
 
   return ""
