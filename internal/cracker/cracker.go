@@ -21,7 +21,7 @@ func powInt(x, y int) int {
 
 func PureBruteforce(hashed_value string, password_lenght int, whitelist []rune) string{
   if password_lenght == 0{
-    password_lenght = 4
+    password_lenght = 4 // Probably should change it, but for one day project good enough
   }
   
   if whitelist == nil{
@@ -40,7 +40,7 @@ func PureBruteforce(hashed_value string, password_lenght int, whitelist []rune) 
     plain_text := string(characters)
     hashed_pass := getMD5Hash(plain_text)
  
-    fmt.Printf("Plain: %s | Hash: %s | same? %t \n", plain_text, hashed_pass, hashed_pass==hashed_value)
+    // fmt.Printf("Plain: %s | Hash: %s | same? %t \n", plain_text, hashed_pass, hashed_pass==hashed_value)
     
     if hashed_pass == hashed_value { 
       return string(characters)
@@ -52,7 +52,7 @@ func PureBruteforce(hashed_value string, password_lenght int, whitelist []rune) 
 
 
 func WordlistBruteForce(hashed_value string) string {
-  // For now I will hardcode wordlistpath, but in the future it will be read from the arguments
+  // For now I will hardcode wordlist path, but in the future it will be read from the arguments
   wordlistFile, err := os.Open("rockyou.txt")
   if err != nil {
       panic(err)
